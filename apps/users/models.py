@@ -9,6 +9,10 @@ from apps.users.manager import UserManager
 from apps.users.validators import CustomEmailValidator
 
 
+def upload_to(instance, filename):
+    return f'media/user_images/{instance.email}/{filename}'
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(validators=[CustomEmailValidator()])
     username = models.CharField(max_length=100)
@@ -16,7 +20,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_("email address"), blank=True, unique=True)
     password = models.CharField(max_length=250)
     role = models.CharField(choices=UserStatusChoices.choices)
-    img = models.ImageField()
+    img = models.ImageField(upload_to=upload_to)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
