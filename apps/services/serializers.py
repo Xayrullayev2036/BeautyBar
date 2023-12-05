@@ -6,7 +6,25 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Services
         exclude = [
-            "owner"
+            "owner",
+            "image"
+        ]
+
+
+class ServiceListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Services
+        exclude = [
+            "created_at",
+            "updated_at"
+        ]
+
+
+class ServiceImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Services
+        fields = [
+            "image"
         ]
 
 
