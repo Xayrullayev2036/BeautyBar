@@ -31,7 +31,11 @@ class Services(BaseModel):
         verbose_name_plural = 'Services'
 
     def __str__(self):
+
         return f"{self.service_name}"
+
+        return f"{self.owner}"
+
 
 
 class Category(BaseModel):
