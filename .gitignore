@@ -414,4 +414,6 @@ fabric.properties
 venv
 .env
 .idea
+/.idea
 apps/users/migrations
+/.idea/misc.xml
