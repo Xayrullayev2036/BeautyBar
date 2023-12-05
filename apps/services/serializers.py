@@ -2,6 +2,12 @@ from rest_framework import serializers
 from apps.services.models import Services, Category
 
 
+class ServiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Services
+        fields = "__all__"
+
+
 class ServiceCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Services

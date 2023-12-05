@@ -42,6 +42,7 @@ PROJECT_APPS = [
     'apps.users',
     'apps.core',
     'apps.services',
+    'apps.order',
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
@@ -83,7 +84,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': "beauty_bar",
+        'NAME': "beauty_barr",
         'USER': "postgres",
         'PASSWORD': '1',
         'HOST': "localhost",
