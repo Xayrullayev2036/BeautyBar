@@ -45,7 +45,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             phone_number=attrs['phone_number'],
             password=make_password(attrs['password']),
             is_active=True,
-            role="user",
+            role=attrs["role"]
         )
         setKey(
             key=attrs['email'],
