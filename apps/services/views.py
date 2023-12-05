@@ -1,11 +1,13 @@
 from django.http import Http404
-from rest_framework import status
+from rest_framework import status, request
 from rest_framework.generics import CreateAPIView, DestroyAPIView, RetrieveAPIView, UpdateAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework.status import HTTP_404_NOT_FOUND
-from apps.services.models import Services, upload_to
+from apps.services.models import Services, upload_to, Category
 from apps.services.permissions import ServicePermission
-from apps.services.serializers import ServiceCreateSerializer
+from apps.services.serializers import ServiceCreateSerializer, CategorySerializer, ServiceSerializer
+from apps.users.models import User
+from apps.users.serializers import UserSerializer
 
 
 class ServiceCreateAPIView(CreateAPIView):
@@ -66,6 +68,31 @@ class ServiceGetAPIView(ListAPIView):
         return Response(serializer.data)
 
 
+class ServiceOwnerGetAPIView(RetrieveAPIView):
+    serializer_class = ServiceSerializer
+    lookup_field = 'pk'
+
+    def get_object(self):
+        category_id = self.kwargs['pk']
+        service = Services.objects.get(id=category_id)
+        return service
+
+    def retrieve(self, request, *args, **kwargs):
+        service_instance = self.get_object()
+        serializer = self.get_serializer(service_instance)
+
+        owner = service_instance.owner
+        owner_serializer = UserSerializer(owner)
+        serialized_owner = owner_serializer.data
+
+        combined_data = {
+            'service': serializer.data,
+            'owner': serialized_owner
+        }
+
+        return Response(combined_data)
+
+
 class ServiceDeleteAPIView(DestroyAPIView):
     queryset = Services.objects.all()
     serializer_class = ServiceCreateSerializer
@@ -76,3 +103,8 @@ class ServiceUpdateAPIView(UpdateAPIView):
     queryset = Services.objects.all()
     serializer_class = ServiceCreateSerializer
     permission_classes = [ServicePermission]
+
+
+class CategoryGetAPIView(ListAPIView):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
