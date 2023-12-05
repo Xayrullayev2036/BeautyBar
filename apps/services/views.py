@@ -184,4 +184,3 @@ class ServiceImageView(APIView):
 class CategoryGetAPIView(ListAPIView):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
-
