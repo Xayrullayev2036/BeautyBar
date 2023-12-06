@@ -33,7 +33,6 @@ class ServiceCreateAPIView(CreateAPIView):
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
-
 class ServiceList1APIView(ListAPIView):
     serializer_class = ServiceListSerializer
 
@@ -54,11 +53,14 @@ class ServiceList1APIView(ListAPIView):
 
         image_data = request.data.get('image')
 
+
         request_data_without_image = dict(request.data)
         request_data_without_image.pop('image', None)
 
+
         serializer = self.get_serializer(data=request_data_without_image)
         serializer.is_valid(raise_exception=True)
+
 
         self.perform_create(serializer)
 
@@ -90,10 +92,12 @@ class ServiceGetAPIView(ListAPIView):
 
         return service_instances
 
+
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+
 
 
 class ServiceListAPIView(ListAPIView):
@@ -107,7 +111,6 @@ class ServiceListAPIView(ListAPIView):
         queryset = Services.objects.all().order_by(order_by_param)
 
         return queryset
-
 
 class ServiceOwnerGetAPIView(RetrieveAPIView):
     serializer_class = ServiceSerializer
@@ -134,6 +137,7 @@ class ServiceOwnerGetAPIView(RetrieveAPIView):
         return Response(combined_data)
 
 
+
 class ServiceDeleteAPIView(DestroyAPIView):
     queryset = Services.objects.all()
     serializer_class = ServiceCreateSerializer
@@ -144,6 +148,7 @@ class ServiceUpdateAPIView(UpdateAPIView):
     queryset = Services.objects.all()
     serializer_class = ServiceCreateSerializer
     permission_classes = [ServicePermission]
+
 
 
 class ServiceImageView(APIView):
@@ -173,6 +178,7 @@ class ServiceImageView(APIView):
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
 
             return Response({"detail": "Image file not provided"}, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class CategoryGetAPIView(ListAPIView):

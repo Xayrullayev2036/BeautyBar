@@ -26,19 +26,14 @@ class ServiceImageSerializer(serializers.ModelSerializer):
         fields = [
             "image"
         ]
-          
+
+
 class ServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Services
         fields = "__all__"
 
 
-class ServiceCreateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Services
-        exclude = [
-            "owner"
-        ]
 
 
 # Category_Get_Serializer
