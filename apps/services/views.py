@@ -4,17 +4,11 @@ from rest_framework.generics import CreateAPIView, DestroyAPIView, RetrieveAPIVi
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from apps.services.models import Services
-from apps.services.permissions import ServicePermission
-from apps.services.serializers import ServiceCreateSerializer, ServiceImageSerializer, ServiceListSerializer
-from rest_framework import status, request
-from rest_framework.generics import CreateAPIView, DestroyAPIView, RetrieveAPIView, UpdateAPIView, ListAPIView
-from rest_framework.response import Response
-from rest_framework.status import HTTP_404_NOT_FOUND
+
 from apps.services.models import Services, upload_to, Category
 from apps.services.permissions import ServicePermission
 from apps.services.serializers import ServiceCreateSerializer, CategorySerializer, ServiceSerializer
-from apps.users.models import User
+from apps.services.serializers import ServiceImageSerializer, ServiceListSerializer
 from apps.users.serializers import UserSerializer
 
 
