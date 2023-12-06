@@ -13,5 +13,5 @@ django-oauth-toolkit
 channels==4.0.0
 daphne==4.0.0
 channels_redis==4.1.0
- pillow==10.1.0
-
+pillow==10.1.0
+django-jazzmin==2.6.0
