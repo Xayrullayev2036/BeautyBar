@@ -169,6 +169,22 @@ class ServiceImageView(APIView):
             return Response({"detail": "Image file not provided"}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class CategoryGetAPIView(ListAPIView):
-    serializer_class = CategorySerializer
-    queryset = Category.objects.all()
+class CategoryGetAPIView(APIView):
+    def get(self, request):
+        # Query parametrlarni olish
+        name = request.query_params.get('name')
+        description = request.query_params.get('description')
+
+        # Barcha ma'lumotlarni olish
+        queryset = Category.objects.all()
+
+        # Agar "name" va "description" parametrlari kiritilgan bo'lsa, ularni filter qilish
+        if name:
+            queryset = queryset.filter(name=name)
+        if description:
+            queryset = queryset.filter(description=description)
+
+        # Ma'lumotlarni serializer orqali formatga o'tkazish
+        serializer = CategorySerializer(queryset, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)

@@ -41,3 +41,8 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = "__all__"
+
+
+class MyQueryParamsSerializer(serializers.Serializer):
+    param_name = serializers.CharField(max_length=255)
+    param_value = serializers.CharField(max_length=255)
