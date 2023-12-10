@@ -5,4 +5,5 @@ urlpatterns = [
     path('', include("apps.order.urls")),
     path('', include('apps.core.urls')),
     path('', include('apps.services.urls')),
+    path('', include('apps.master.urls')),
 ]
