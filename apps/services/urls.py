@@ -11,6 +11,5 @@ urlpatterns = [
     path('category/', CategoryGetAPIView.as_view()),
     path('service/<int:pk>/', ServiceOwnerGetAPIView.as_view()),
     # path('service/<int:pk>/image', ServiceImageView.as_view(), name='service-image-upload'),
-    path('service/', ServiceListAPIView.as_view()),
-
+    path('service/', ServiceListAPIView.as_view()),   
 ]

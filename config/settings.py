@@ -45,6 +45,7 @@ PROJECT_APPS = [
     'apps.core',
     'apps.services',
     'apps.order',
+    'apps.master'
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
@@ -251,7 +252,7 @@ JAZZMIN_SETTINGS = {
 
     # List of model admins to search from the search bar, search bar omitted if excluded
     # If you want to use a single search field you dont need to use a list, you can use a simple string
-    "search_model": ["order.Order", "services.Services", "services.Category","users.User"],
+    "search_model": ["order.Order", "services.Services", "services.Category", "users.User"],
 
     # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
     "user_avatar": None,
@@ -303,7 +304,7 @@ JAZZMIN_SETTINGS = {
     "hide_models": [],
 
     # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
-    "order_with_respect_to": ["order.Order", "services.Services","services.Category","users.User"],
+    "order_with_respect_to": ["order.Order", "services.Services", "services.Category", "users.User"],
 
     # Custom links to append to app groups, keyed on app name
     "custom_links": {
