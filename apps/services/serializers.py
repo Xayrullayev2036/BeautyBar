@@ -34,13 +34,11 @@ class ServiceSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-
-
 # Category_Get_Serializer
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = "__all__"
+        fields = ["id", "name", "type"]
 
 
 class MyQueryParamsSerializer(serializers.Serializer):
