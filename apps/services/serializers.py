@@ -34,8 +34,6 @@ class ServiceSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-
-
 # Category_Get_Serializer
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:

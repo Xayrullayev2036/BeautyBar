@@ -2,7 +2,7 @@ from django.urls import path
 
 
 from apps.services.views import ServiceList1APIView, ServiceCreateAPIView, ServiceUpdateAPIView, ServiceDeleteAPIView, \
-    ServiceImageView, ServiceListAPIView, ServiceOwnerGetAPIView,CategoryGetAPIView
+    ServiceImageView, ServiceOwnerGetAPIView, CategoryGetAPIView
 
 
 urlpatterns = [
@@ -11,5 +11,5 @@ urlpatterns = [
     path('category/', CategoryGetAPIView.as_view()),
     path('service/<int:pk>/', ServiceOwnerGetAPIView.as_view()),
     # path('service/<int:pk>/image', ServiceImageView.as_view(), name='service-image-upload'),
-    path('service/', ServiceListAPIView.as_view()),   
+    path('service/', ServiceList1APIView.as_view()),
 ]
