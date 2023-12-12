@@ -38,7 +38,7 @@ class ServiceSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = "__all__"
+        fields = ["id", "name", "type"]
 
 
 class MyQueryParamsSerializer(serializers.Serializer):

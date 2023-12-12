@@ -7,7 +7,8 @@ from rest_framework.views import APIView
 
 from apps.services.models import Services, upload_to, Category
 from apps.services.permissions import ServicePermission
-from apps.services.serializers import ServiceCreateSerializer, CategorySerializer, ServiceSerializer
+from apps.services.serializers import ServiceCreateSerializer, CategorySerializer, ServiceSerializer, \
+    MyQueryParamsSerializer
 from apps.services.serializers import ServiceImageSerializer, ServiceListSerializer
 from apps.users.serializers import UserSerializer
 
@@ -65,6 +66,21 @@ class ServiceList1APIView(ListAPIView):
     #         # Save the image separately
     #         service_instance.image.save(upload_to(service_instance, image_data[0].name), image_data[0])
     #
+    #     headers = self.get_success_headers(serializer.data)
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    #     serializer = self.get_serializer(data=request_data_without_image)
+    #     serializer.is_valid(raise_exception=True)
+
+    #     self.perform_create(serializer)
+
+    #     # Get the saved service instance
+    #     service_instance = serializer.instance
+
+    #     # Check if the image file is present before attempting to save it
+    #     if image_data and isinstance(image_data, list):
+    #         # Save the image separately
+    #         service_instance.image.save(upload_to(service_instance, image_data[0].name), image_data[0])
+
     #     headers = self.get_success_headers(serializer.data)
     #     return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
@@ -171,21 +187,11 @@ class ServiceImageView(APIView):
 
 
 class CategoryGetAPIView(APIView):
-    def get(self, request):
-        # Query parametrlarni olish
-        name = request.query_params.get('name')
-        description = request.query_params.get('description')
-
-        # Barcha ma'lumotlarni olish
+    def get(self, request, type=None):
         queryset = Category.objects.all()
 
-        # Agar "name" va "description" parametrlari kiritilgan bo'lsa, ularni filter qilish
-        if name:
-            queryset = queryset.filter(name=name)
-        if description:
-            queryset = queryset.filter(description=description)
+        if type:
+            queryset = queryset.filter(type=type)
 
-        # Ma'lumotlarni serializer orqali formatga o'tkazish
         serializer = CategorySerializer(queryset, many=True)
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK if serializer.data else status.HTTP_204_NO_CONTENT)
