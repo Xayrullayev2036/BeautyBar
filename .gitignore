@@ -405,6 +405,7 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+# Editor-based Rest Client
 .idea/httpRequests
 
 # Android studio 3.1+ serialized cache file
@@ -417,3 +418,5 @@ venv
 /.idea
 apps/users/migrations
 /.idea/misc.xml
+/.idea
+.idea
