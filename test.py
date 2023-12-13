@@ -160,7 +160,7 @@ def generate_time_slots(start_time, end_time, interval_minutes):
         current_time += timedelta(minutes=interval_minutes)
 
 
-def place_order(schedule, date, time_slot, service_duration, start_time, end_time, interval_minutes):
+def place_order(schedule, date, time_slot, service_duration):
     if date in schedule and time_slot in schedule[date]:
         order_datetime = datetime.strptime(f"{date} {time_slot}", "%Y-%m-%d %H:%M")
         print(
@@ -168,11 +168,6 @@ def place_order(schedule, date, time_slot, service_duration, start_time, end_tim
         print(order_datetime)
         end_order_time = order_datetime + timedelta(minutes=service_duration)
         print(end_order_time)
-
-        next_available_slots = [
-            current_time.strftime("%H:%M") for current_time in
-            generate_time_slots(end_order_time, end_time, interval_minutes)
-        ]
 
         schedule[date].remove(time_slot)
 
@@ -182,43 +177,41 @@ def place_order(schedule, date, time_slot, service_duration, start_time, end_tim
             if current_time_str in schedule[date]:
                 schedule[date].remove(current_time_str)
             current_time += timedelta(minutes=interval_minutes)
-
-        # Mark the subsequent time slots as booked
-        for next_slot in next_available_slots:
-            if next_slot in schedule[date]:
-                schedule[date].remove(next_slot)
-                print(f"Next available time slot {next_slot} booked")
-
-        print(f"Next available time slots: {next_available_slots}")
     else:
         print("Invalid date or time slot")
 
 
 if __name__ == "__main__":
-    start_date = datetime(2023, 12, 1)  # Change to the desired start date
-    end_date = datetime(2023, 12, 31)  # Change to the desired end date
+    start_date = datetime(2023, 12, 1)
+    print(f"Starting at {start_date}")
+    end_date = datetime(2023, 12, 31)
+    print(f"Ending at {end_date}")
     start_time = datetime.strptime("09:00", "%H:%M")
+    print(f"Starting at {start_date}")
     end_time = datetime.strptime("20:00", "%H:%M")
+    print(f"Ending at {end_date}")
     interval_minutes = 30
 
     schedule = generate_schedule(start_date, end_date, start_time, end_time, interval_minutes)
 
     # Assume placing an order on December 15, 2023, at 10:30 with a service duration of 90 minutes
-    order_date = datetime(2023, 12, 5)
+    order_date = datetime(2023, 12, 6)
     order_time_slot = "15:00"
-    service_duration = 40
+    service_duration = 90
 
     place_order(
         schedule,
         order_date.strftime("%Y-%m-%d"),
         order_time_slot,
         service_duration,
-        start_time,
-        end_time,
-        interval_minutes
     )
 
     with open("schedule.json", "w") as json_file:
         json.dump(schedule, json_file, indent=2)
 
     print("Schedule updated and saved to 'schedule.json'")
+
+# user_id = 1
+# user_instance = User.objects.get(id=user_id)
+# master_inst = Master.objects.get(user_id=user_instance.id)
+# print(master_inst)

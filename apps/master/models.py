@@ -39,8 +39,8 @@ class Master(BaseModel):
 
     def __str__(self):
         return (
-            f"{self.first_name}, "
-            f"{self.last_name}, "
+            # f"{self.first_name}, "
+            # f"{self.last_name}, "
             # f"{self.description}, "
             # f"{self.master_status}, "
             # f"{self.gender}, "
@@ -48,5 +48,5 @@ class Master(BaseModel):
             # f"{self.experiance}, "
             # f"{self.age}, "
             # f"{self.salon}, "
-            # f"{self.user}"
+            f"{self.user}"
         )
