@@ -28,7 +28,6 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             'phone_number',
             'email',
             'password',
-            'role',
         ]
 
     def validate_email(self, value):
@@ -47,7 +46,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             phone_number=attrs['phone_number'],
             password=make_password(attrs['password']),
             is_active=True,
-            role=attrs["role"]
+            role="user"
         )
         setKey(
             key=attrs['email'],
