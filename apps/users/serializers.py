@@ -4,6 +4,8 @@ from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
 from rest_framework import serializers
 
+from apps.master.models import Master
+from apps.master.serializers import MasterSerializer
 from config.settings import EMAIL_HOST_USER
 from apps.users.models import User, getKey, setKey
 
@@ -100,11 +102,33 @@ class ResetPasswordConfirmSerializer(serializers.Serializer):
     confirm_password = serializers.CharField()
 
 
-class UserRetriveSerializer(serializers.ModelSerializer):
+# class UserRetriveSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = [
+#             'id',
+#             'email',
+#             'phone_number',
+#         ]
+
+class UserRetrieveSerializer(serializers.ModelSerializer):
+    master = serializers.SerializerMethodField()
+
     class Meta:
         model = User
         fields = [
             'id',
             'email',
             'phone_number',
+            'master',
         ]
+
+    def get_master(self, obj):
+        try:
+            master_instance = obj.master
+            if master_instance:
+                return MasterSerializer(master_instance).data
+            else:
+                return None
+        except Master.DoesNotExist:
+            return None

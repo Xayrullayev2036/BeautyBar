@@ -11,7 +11,6 @@ class MasterSerializer(serializers.ModelSerializer):
             'first_name',
             'last_name',
             'description',
-            'status',
             'gender',
             'languages',
             'experiance',

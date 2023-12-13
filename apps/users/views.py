@@ -4,9 +4,10 @@ from rest_framework import status
 from rest_framework.generics import CreateAPIView, ListAPIView, GenericAPIView
 from rest_framework.response import Response
 
+from apps.master.models import Master
 from apps.users.models import User, getKey
 from apps.users.permissions import UserPermission
-from apps.users.serializers import UserRegisterSerializer, UserRetriveSerializer, CheckActivationCodeSerializer, \
+from apps.users.serializers import UserRegisterSerializer, UserRetrieveSerializer, CheckActivationCodeSerializer, \
     ResetPasswordConfirmSerializer, ResetPasswordSerializer
 
 
@@ -22,14 +23,14 @@ class UserRegisterCreateAPIView(CreateAPIView):
 
 class ProfileInfoListAPIView(ListAPIView):
     permission_classes = [UserPermission]
-    serializer_class = UserRetriveSerializer
+    serializer_class = UserRetrieveSerializer
 
     def get_queryset(self):
         user = self.request.user
+
         if user.is_authenticated:
             if user.is_superuser:
                 return User.objects.all()
-
             else:
                 return User.objects.filter(id=user.id)
         else:
