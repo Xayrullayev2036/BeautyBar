@@ -45,7 +45,8 @@ PROJECT_APPS = [
     'apps.core',
     'apps.services',
     'apps.order',
-    'apps.master'
+    'apps.master',
+    'apps.appointment'
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 

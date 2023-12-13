@@ -38,20 +38,36 @@ class ServiceList1APIView(ListAPIView):
             raise Http404("Category ID is required")
 
         queryset = Services.objects.filter(category=category_id)
-        if not queryset.exists():
-            raise Http404("Services not found")
+        if queryset.exists():
+            return queryset
 
-        return queryset
+        raise Http404("Services not found")
 
+    #
     #     serializer.save(owner=self.request.user)
-
+    #
     # def create(self, request, *args, **kwargs):
-
+    #
     #     image_data = request.data.get('image')
-
+    #
     #     request_data_without_image = dict(request.data)
     #     request_data_without_image.pop('image', None)
-
+    #
+    #     serializer = self.get_serializer(data=request_data_without_image)
+    #     serializer.is_valid(raise_exception=True)
+    #
+    #     self.perform_create(serializer)
+    #
+    #     # Get the saved service instance
+    #     service_instance = serializer.instance
+    #
+    #     # Check if the image file is present before attempting to save it
+    #     if image_data and isinstance(image_data, list):
+    #         # Save the image separately
+    #         service_instance.image.save(upload_to(service_instance, image_data[0].name), image_data[0])
+    #
+    #     headers = self.get_success_headers(serializer.data)
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
     #     serializer = self.get_serializer(data=request_data_without_image)
     #     serializer.is_valid(raise_exception=True)
 
@@ -141,33 +157,34 @@ class ServiceUpdateAPIView(UpdateAPIView):
     permission_classes = [ServicePermission]
 
 
-class ServiceImageView(APIView):
-    parser_classes = [MultiPartParser, FormParser]
-
-    def post(self, request, service_id):
-        choose_image = request.query_params.get('choose_image', None)
-
-        if choose_image:
-            image_instances = Services.objects.filter(id=choose_image)
-            if not image_instances.exists():
-                return Response({"detail": "Image not found"}, status=status.HTTP_404_NOT_FOUND)
-            serializer = ServiceImageSerializer(image_instances, many=True)
-            return Response(serializer.data)
-        else:
-            service_instances = Services.objects.filter(id=service_id)
-
-            if not service_instances.exists():
-                return Response({"detail": "Service not found"}, status=status.HTTP_404_NOT_FOUND)
-            image_file = request.data.get('image')
-            if image_file:
-                for service_instance in service_instances:
-                    service_instance.image.save(image_file.name, image_file, save=True)
-                    service_instance.save()
-
-                serializer = ServiceImageSerializer(service_instances, many=True)
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-            return Response({"detail": "Image file not provided"}, status=status.HTTP_400_BAD_REQUEST)
+#
+# class ServiceImageView(APIView):
+#     parser_classes = [MultiPartParser, FormParser]
+#
+#     def post(self, request, service_id):
+#         choose_image = request.query_params.get('choose_image', None)
+#
+#         if choose_image:
+#             image_instances = Services.objects.filter(id=choose_image)
+#             if not image_instances.exists():
+#                 return Response({"detail": "Image not found"}, status=status.HTTP_404_NOT_FOUND)
+#             serializer = ServiceImageSerializer(image_instances, many=True)
+#             return Response(serializer.data)
+#         else:
+#             service_instances = Services.objects.filter(id=service_id)
+#
+#             if not service_instances.exists():
+#                 return Response({"detail": "Service not found"}, status=status.HTTP_404_NOT_FOUND)
+#             image_file = request.data.get('image')
+#             if image_file:
+#                 for service_instance in service_instances:
+#                     service_instance.image.save(image_file.name, image_file, save=True)
+#                     service_instance.save()
+#
+#                 serializer = ServiceImageSerializer(service_instances, many=True)
+#                 return Response(serializer.data, status=status.HTTP_201_CREATED)
+#
+#             return Response({"detail": "Image file not provided"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CategoryGetAPIView(APIView):

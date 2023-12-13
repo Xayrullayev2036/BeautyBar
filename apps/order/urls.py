@@ -5,6 +5,4 @@ from apps.order.views import OrderCreateView, OrderListView, OrderUpdateView, Or
 urlpatterns = [
     path('order/', OrderCreateView.as_view()),
     path('order/', OrderListView.as_view()),
-    path('order/<int:pk>/', OrderUpdateView.as_view()),
-    path('order/<int:pk>/', OrderDeleteView.as_view()),
 ]
