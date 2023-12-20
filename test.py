@@ -163,14 +163,9 @@ def generate_time_slots(start_time, end_time, interval_minutes):
 def place_order(schedule, date, time_slot, service_duration):
     if date in schedule and time_slot in schedule[date]:
         order_datetime = datetime.strptime(f"{date} {time_slot}", "%Y-%m-%d %H:%M")
-        print(
-            f"date: {date}, time: {time_slot}, service_duration: {service_duration}, start_time: {start_time}, end_time: {end_time}, interval_minutes: {interval_minutes}")
-        print(order_datetime)
         end_order_time = order_datetime + timedelta(minutes=service_duration)
-        print(end_order_time)
-
+        print(schedule[date])
         schedule[date].remove(time_slot)
-
         current_time = order_datetime
         while current_time < end_order_time:
             current_time_str = current_time.strftime("%H:%M")
@@ -183,20 +178,15 @@ def place_order(schedule, date, time_slot, service_duration):
 
 if __name__ == "__main__":
     start_date = datetime(2023, 12, 1)
-    print(f"Starting at {start_date}")
     end_date = datetime(2023, 12, 31)
-    print(f"Ending at {end_date}")
     start_time = datetime.strptime("09:00", "%H:%M")
-    print(f"Starting at {start_date}")
     end_time = datetime.strptime("20:00", "%H:%M")
-    print(f"Ending at {end_date}")
     interval_minutes = 30
 
     schedule = generate_schedule(start_date, end_date, start_time, end_time, interval_minutes)
 
-    # Assume placing an order on December 15, 2023, at 10:30 with a service duration of 90 minutes
     order_date = datetime(2023, 12, 6)
-    order_time_slot = "15:00"
+    order_time_slot = "13:00"
     service_duration = 90
 
     place_order(
@@ -205,6 +195,10 @@ if __name__ == "__main__":
         order_time_slot,
         service_duration,
     )
+    # print(schedule)
+    # print(order_date)
+    # print(order_time_slot)
+    # print(service_duration)
 
     with open("schedule.json", "w") as json_file:
         json.dump(schedule, json_file, indent=2)
