@@ -1,7 +1,8 @@
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework import status
 
+from apps.appointment.models import Schedule
 from apps.appointment.serializers import ScheduleSerializer, ScheduleCreateSerializer
 from apps.master.models import Master
 from apps.utils import save_schedule_to_database
@@ -34,3 +35,19 @@ class ScheduleCreateAPIView(CreateAPIView):
 
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+class ScheduleListApiView(ListAPIView):
+    serializer_class = ScheduleSerializer
+
+    def get_queryset(self):
+        schedule = Schedule.objects.all()
+        master = Master.objects.get(id=schedule.master.id)
+        print(master)
+        return master
+
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
