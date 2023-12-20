@@ -1,11 +1,14 @@
+from datetime import datetime
+
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
-from rest_framework.generics import CreateAPIView, ListAPIView, GenericAPIView, UpdateAPIView, DestroyAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.response import Response
 
 from apps.order.models import Order
 from apps.order.permissions import OrderPermission
 from apps.order.serializers import OrderSerializers, OrderRetriveSerializers, OrderCreateSerializers
+from apps.utils import get_schedule, get_service_duration, get_duration, place_order
 
 
 class OrderCreateView(CreateAPIView):
@@ -18,6 +21,19 @@ class OrderCreateView(CreateAPIView):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+
+        first_name = serializer.validated_data["first_name"]
+        last_name = serializer.validated_data["last_name"]
+        # order_date = serializer.validated_data["order_date"]
+        # time_slot = serializer.validated_data["time_slot"]
+        services = serializer.validated_data["services"]
+        order_date = datetime(2023, 12, 2)
+        date = order_date.strftime("%Y-%m-%d")
+        duration = 60
+        time_slot = "13:00"
+        schedule = get_schedule(services)
+        place_order(schedule, date, time_slot, duration)
+
         serializer.save(user_id=self.request.user.id)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)

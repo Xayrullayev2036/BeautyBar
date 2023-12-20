@@ -20,5 +20,3 @@ class ScheduleCreateSerializer(serializers.Serializer):
     start_time = serializers.TimeField(format="%H:%M")
     end_time = serializers.TimeField(format="%H:%M")
     interval_minutes = 30
-
-
