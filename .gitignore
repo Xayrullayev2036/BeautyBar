@@ -420,3 +420,15 @@ apps/users/migrations
 /.idea/misc.xml
 /.idea
 .idea
+
+apps/master/migrations/
+apps/order/migrations/
+apps/services/migrations/
+
+# Ignore JSON files
+bobo.json
+schedule.json
+
+# Ignore media files
+media/
+test2.py

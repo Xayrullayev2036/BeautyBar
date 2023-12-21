@@ -12,6 +12,7 @@ class Order(models.Model):
     user = models.ForeignKey(User, related_name="user_order", on_delete=models.CASCADE)
     services = models.ForeignKey(Services, related_name="services_order", on_delete=models.CASCADE)
     order_date = models.DateTimeField(auto_now_add=True)
+    time_slot = models.CharField(max_length=5)
     order_status = models.CharField(choices=OrderStatusChoice.choices, max_length=255)
 
     class Meta:
