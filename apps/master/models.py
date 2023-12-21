@@ -8,7 +8,7 @@ from apps.users.choices import GenderChoices
 
 
 class Master(BaseModel):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="user_master")
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="master")
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
     description = models.TextField()
@@ -39,14 +39,13 @@ class Master(BaseModel):
 
     def __str__(self):
         return (
-            # f"{self.first_name}, "
-            # f"{self.last_name}, "
-            # f"{self.description}, "
-            # f"{self.master_status}, "
-            # f"{self.gender}, "
-            # f"{self.languages}, "
-            # f"{self.experiance}, "
-            # f"{self.age}, "
-            # f"{self.salon}, "
+            f"{self.first_name}, "
+            f"{self.last_name}, "
+            f"{self.description}, "
+            f"{self.master_status}, "
+            f"{self.gender}, "
+            f"{self.languages}, "
+            f"{self.experiance}, "
+            f"{self.age}, "
             f"{self.user}"
         )
