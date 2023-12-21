@@ -15,26 +15,12 @@ class OrderCreateView(CreateAPIView):
     serializer_class = OrderCreateSerializers
     permission_classes = [OrderPermission]
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user.id)
+    # def perform_create(self, serializer):
+    #     serializer.save(user=self.request.user)
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
-        first_name = serializer.validated_data["first_name"]
-        last_name = serializer.validated_data["last_name"]
-        # order_date = serializer.validated_data["order_date"]
-        # time_slot = serializer.validated_data["time_slot"]
-        services = serializer.validated_data["services"]
-        order_date = datetime(2023, 12, 2)
-        date = order_date.strftime("%Y-%m-%d")
-        duration = 60
-        time_slot = "13:00"
-        schedule = get_schedule(services)
-        place_order(schedule, date, time_slot, duration)
-
-        serializer.save(user_id=self.request.user.id)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 

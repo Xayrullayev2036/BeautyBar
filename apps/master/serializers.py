@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from apps.appointment.models import Schedule
 from apps.master.models import Master
 from apps.master.permissions import UserPermission
 from apps.users.models import User
@@ -66,3 +68,9 @@ class MasterRetriveSerializer(serializers.ModelSerializer):
             'experiance',
             'age',
         ]
+
+
+class OrderRetriveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Schedule
+        fields = "__all__"
