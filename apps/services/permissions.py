@@ -7,5 +7,5 @@ class ServicePermission(permissions.BasePermission):
                 request.user
                 and request.user.is_authenticated
                 and request.user.is_verified
-                and request.user.role == "master"
+                # and request.user.role == "master"
         )
