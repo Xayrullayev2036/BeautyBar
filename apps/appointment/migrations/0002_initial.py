@@ -11,6 +11,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('master', '0001_initial'),
         ('appointment', '0001_initial'),
+
     ]
 
     operations = [
