@@ -37,11 +37,11 @@ class OrderListView(ListAPIView):
             else:
                 return Order.objects.filter(user=user.id)
         else:
-            raise ValidationError("Please you need to authenticate!")
+            raise ValidationError("Please authenticate to access this resource.")
 
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
-        serializer_class = OrderSerializers
+        serializer_class = OrderRetriveSerializers
         serializer = serializer_class(queryset, many=True)
         return Response(serializer.data)
 

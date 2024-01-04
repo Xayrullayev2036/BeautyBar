@@ -191,8 +191,14 @@ class CategoryGetAPIView(APIView):
     def get(self, request, type=None):
         queryset = Category.objects.all()
 
-        if type:
+        if type is not None:
             queryset = queryset.filter(type=type)
 
         serializer = CategorySerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK if serializer.data else status.HTTP_204_NO_CONTENT)
+
+    def get_queryset(self):
+        type_param = self.request.query_params.get('type')
+        if type_param:
+            return Category.objects.filter(type=type_param)
+        return Category.objects.all()

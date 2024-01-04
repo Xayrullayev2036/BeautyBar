@@ -46,7 +46,6 @@ class ScheduleListApiView(ListAPIView):
         print(master)
         return master
 
-
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
         serializer = self.serializer_class(queryset, many=True)
